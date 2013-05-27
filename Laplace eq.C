@@ -6,20 +6,20 @@ using namespace std;
 
 const int LengthOfCapacitor = 1;
 const double GridInterval = 0.1;
-const int GridCheck = LengthOfCapacitor * 10;
+const int GridCheck = LengthOfCapacitor * 20 +1;
 const double PI = 3.14159;
 const double alpha = 2 / (1 + PI / LengthOfCapacitor);
 double potential[GridCheck][GridCheck];
 double temp_potential[GridCheck][GridCheck];
 double delta_V;
-double PermitErrorV = GridCheck * GridCheck * pow(10, -10);
+double PermitErrorV = GridCheck * GridCheck * pow(10, -3);
 
 void initializa_V()
 {
     for (int i = 0; i < GridCheck; i++)
     {
-        potential[i][0] = 1;
-        potential[i][GridCheck-1] = -1;
+        potential[i][6] = 1;
+        potential[i][GridCheck-6] = -1;
     }
 }
 
