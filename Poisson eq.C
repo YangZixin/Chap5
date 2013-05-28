@@ -5,7 +5,7 @@
 using namespace std;
 
 const int LengthOfBox = 1;
-const int GridInterval = 40;
+const int GridInterval = 10;
 const int GridCheck = LengthOfBox * GridInterval +1;
 const double PI = 3.14159;
 const double alpha = 2 / (1 + PI / LengthOfBox);
@@ -90,7 +90,7 @@ int laplace_calculate_SOR()
     while(delta_V > PermitErrorV);
     return N_iter_SOR;
 }
-int main()
+int mainPro()
 {
     initializa_rho();
     int N_iter = laplace_calculate_SOR();
@@ -105,4 +105,32 @@ int main()
     }
 
     return 0;
+}
+
+void h1draw()
+{
+ 
+gStyle->SetPalette(51);
+gStyle->SetOptStat(0);
+gStyle->SetOptTitle(1);
+
+    TCanvas *c1 = new TCanvas("c1","Potential Distribution",200,10,800,400);
+    mainPro();
+    TH2D *myMatrix =new TH2D("h1","Potential Distribution", GridCheck,0,GridCheck,GridCheck,0,GridCheck);
+    for (int i = 0; i < GridCheck; ++i)
+    {
+        for (int j = 0; j < GridCheck; ++j)
+        {
+            myMatrix->SetBinContent(i,j,potential[i][j]);        
+        }    
+    }
+    c1->Divide(2,1);
+    c1->cd(1);
+    myMatrix->SetTitle("Perspective plot of the potential");
+    myMatrix->Draw("surf3");
+    TH2D *myMatrix2 =myMatrix->Clone();
+    c1->cd(2);
+    myMatrix2->SetTitle("Equipotential lines");
+    myMatrix2->Draw("Cont1");
+
 }
