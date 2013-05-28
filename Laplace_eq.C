@@ -146,7 +146,7 @@ gStyle->SetOptTitle(1);
     myMatrix->SetTitle("Perspective plot of the potential");
     myMatrix->Draw("surf3");
     c1->cd(2);
-    myMatrix->SetTitle("Equipotential lines");
-    myMatrix->Draw("Cont1");
-
+    TH2D *myMatrix2 =myMatrix->Clone();
+    myMatrix2->SetTitle("Equipotential lines");
+    myMatrix2->Draw("Cont1");
 }
