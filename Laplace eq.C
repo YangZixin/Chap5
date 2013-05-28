@@ -5,7 +5,7 @@
 using namespace std;
 
 const int LengthOfCapacitor = 2;
-const int GridInterval = 40;
+const int GridInterval = 50;
 const int GridCheck = LengthOfCapacitor * GridInterval +1;
 const double PI = 3.14159;
 const double alpha = 2 / (1 + PI / LengthOfCapacitor);
@@ -52,8 +52,6 @@ void update_V()
             
                 potential[i][j]=temp_potential[i][j];
         }
-        // potential[i][6] = 1;
-        // potential[i][GridCheck-7] = -1;
     }
 }
 
@@ -88,26 +86,6 @@ void update_V_SOR()
     }
 }
 
-
-/*void update_V_SOR()
-{
-    delta_V = 0;
-    for (int i = 1; i < GridCheck-1; i++)
-    {
-        for (int j = 1; j < GridCheck-1; j++)
-        {
-          if (j != 6 * LengthOfCapacitor && j != GridCheck-6 * LengthOfCapacitor - 1)
-            {
-            temp_potential[i][j] = (potential[i-1][j]+potential[i+1][j]+potential[i][j-1]+potential[i][j+1]) / 4;
-            potential[i][j] = alpha * (temp_potential[i][j] - potential[i][j]) + potential[i][j];
-            delta_V += alpha * sqrt((potential[i][j]-temp_potential[i][j]) * (potential[i][j]-temp_potential[i][j]));
-        }
-        }
-    }
-
-}*/
-
-
 int laplace_calculate()
 {
     int N_iter;
@@ -134,7 +112,7 @@ int laplace_calculate_SOR()
 int main()
 {
 	initialize_V();
-    int N_iter = laplace_calculate_SOR();
+    int N_iter = laplace_calculate();
     cout<<N_iter<<endl;
     for (int i = 0; i < GridCheck; ++i)
     {
