@@ -1,0 +1,147 @@
+\documentclass{article}
+\usepackage{CJK}
+\usepackage{graphicx}
+\usepackage[onlyps]{altfont}
+\usepackage{latexsym}
+\usepackage{amsmath}
+\usepackage[top=1in,bottom=1in,left=1.25in,right=1.25in]{geometry}
+\usepackage[colorlinks,linkcolor=blue,anchorcolor=blue,citecolor=green]{hyperref}
+\newcommand{\ud}{\mathrm{d}}
+\begin{CJK}{UTF8}{gbsn}
+	\author{杨梓鑫\ \ 10级物理弘毅班}
+	\title{第八次计算物理作业}
+	\date{学号：2010301020023}
+	\begin{document}
+	\maketitle
+\section{Problem}
+$*\mathbf{5.7.}$ Write two programs to solve the capacitor problem of Figure 5.6 and 5.7, one using the Jacobi method and one using the SOR algorithm. For a fixed accuracy (as set by the convergence test)compare the number of iterarions, $N_{\mathrm{iter}}$, that  each algorithm requires as a function of the number of grid elements, $L$. Show that for the Jacobi method $N_{\mathrm{iter}} \sim L^2$, while with SOR $N_{\mathrm{iter}} \sim L$.
+
+\section{Analysis}
+Now solve the problem of a capacitor whose two plates locate at $x=-0.3L$, and $x=0.3L$, length of which is $L$. The potential around and in between of it obeys the Laplace's equation:
+\begin{equation}
+\frac{\partial^2 V}{\partial x^2}+\frac{\partial^2 V}{\partial y^2}+\frac{\partial^2 V}{\partial z^2}=0.
+\end{equation}
+And we are going to use the Jacobi method, which is divided into three parts: \sf \footnotesize initialize-V, update-V, laplace-calculate, \normalsize \rm and another with the SOR algorithm, which is almost alike the original Jacobi method except a large stride in \sf \footnotesize update-V \rm \normalsize with a factor $\alpha \approx \frac{2}{1+\pi/L}$. \\
+And the graphic results are shown in Figure 1 and Figure \ref{fig1}. The results of two method seems quite alike, and the numerical output says the same way within the tolerable range of discrepancy: \\\\
+\footnotesize{Jacobi method, with length } $L=1$:
+\[
+\begin{array}{ccccccccccc}
+
+\scriptstyle 0  &  \scriptstyle 0  &  \scriptstyle 0  &  \scriptstyle 0  &  \scriptstyle 0  &  \scriptstyle 0  &  \scriptstyle 0  &  \scriptstyle 0  &  \scriptstyle 0  &  \scriptstyle 0  &  \scriptstyle 0    \\
+\scriptstyle 0  &  \scriptstyle 0.0758693  &  \scriptstyle 0.141539  &  \scriptstyle 0.169289  &  \scriptstyle 0.102691  &  \scriptstyle -3.46945e-18  &  \scriptstyle -0.102691  &  \scriptstyle -0.169289  &  \scriptstyle -0.141539  &  \scriptstyle -0.0758693  &  \scriptstyle 0    \\
+\scriptstyle 0  &  \scriptstyle 0.161961  &  \scriptstyle 0.321071  &  \scriptstyle 0.43295  &  \scriptstyle 0.241506  &  \scriptstyle 0  &  \scriptstyle -0.241506  &  \scriptstyle -0.43295  &  \scriptstyle -0.321071  &  \scriptstyle -0.161961  &  \scriptstyle 0    \\
+\scriptstyle 0  &  \scriptstyle 0.250989  &  \scriptstyle 0.547883  &  \scriptstyle 1  &  \scriptstyle 0.430401  &  \scriptstyle 0  &  \scriptstyle -0.430401  &  \scriptstyle -1  &  \scriptstyle -0.547883  &  \scriptstyle -0.250989  &  \scriptstyle 0    \\
+\scriptstyle 0  &  \scriptstyle 0.294151  &  \scriptstyle 0.619572  &  \scriptstyle 1  &  \scriptstyle 0.480114  &  \scriptstyle 0  &  \scriptstyle -0.480114  &  \scriptstyle -1  &  \scriptstyle -0.619572  &  \scriptstyle -0.294151  &  \scriptstyle 0    \\
+\scriptstyle 0  &  \scriptstyle 0.306139  &  \scriptstyle 0.636297  &  \scriptstyle 1  &  \scriptstyle 0.490056  &  \scriptstyle 0  &  \scriptstyle -0.490056  &  \scriptstyle -1  &  \scriptstyle -0.636297  &  \scriptstyle -0.306139  &  \scriptstyle 0    \\
+\scriptstyle 0  &  \scriptstyle 0.294151  &  \scriptstyle 0.619572  &  \scriptstyle 1  &  \scriptstyle 0.480114  &  \scriptstyle 0  &  \scriptstyle -0.480114  &  \scriptstyle -1  &  \scriptstyle -0.619572  &  \scriptstyle -0.294151  &  \scriptstyle 0    \\
+\scriptstyle 0  &  \scriptstyle 0.250989  &  \scriptstyle 0.547883  &  \scriptstyle 1  &  \scriptstyle 0.430401  &  \scriptstyle 0  &  \scriptstyle -0.430401  &  \scriptstyle -1  &  \scriptstyle -0.547883  &  \scriptstyle -0.250989  &  \scriptstyle 0   \\
+\scriptstyle 0  &  \scriptstyle 0.161961  &  \scriptstyle 0.321071  &  \scriptstyle 0.43295  &  \scriptstyle 0.241506  &  \scriptstyle 0  &  \scriptstyle -0.241506  &  \scriptstyle -0.43295  &  \scriptstyle -0.321071  &  \scriptstyle -0.161961  &  \scriptstyle 0   \\
+\scriptstyle 0  &  \scriptstyle 0.0758693  &  \scriptstyle 0.141539  &  \scriptstyle 0.169289  &  \scriptstyle 0.102691  &  \scriptstyle -3.46945e-18  &  \scriptstyle -0.102691  &  \scriptstyle -0.169289  &  \scriptstyle -0.141539  &  \scriptstyle -0.0758693  &  \scriptstyle 0    \\
+\scriptstyle 0  &  \scriptstyle 0  &  \scriptstyle 0  &  \scriptstyle 0  &  \scriptstyle 0  &  \scriptstyle 0  &  \scriptstyle 0  &  \scriptstyle 0  &  \scriptstyle 0  &  \scriptstyle 0  &  \scriptstyle 0    \\
+\end{array}
+\]
+\\\footnotesize{SOR algorithm, with length } $L=1$:
+\[
+\begin{array}{ccccccccccc}
+
+\scriptstyle 0  &  \scriptstyle 0  &  \scriptstyle 0  &  \scriptstyle 0  &  \scriptstyle 0  &  \scriptstyle 0  &  \scriptstyle 0  &  \scriptstyle 0  &  \scriptstyle 0  &  \scriptstyle 0  &  \scriptstyle 0   \\
+\scriptstyle 0  &  \scriptstyle 0.0758692  &  \scriptstyle 0.141592  &  \scriptstyle 0.169432  &  \scriptstyle 0.102959  &  \scriptstyle 0.000327542  &  \scriptstyle -0.102395  &  \scriptstyle -0.169072  &  \scriptstyle -0.141391  &  \scriptstyle -0.0757881  &  \scriptstyle 0    \\
+\scriptstyle 0  &  \scriptstyle 0.161958  &  \scriptstyle 0.32112  &  \scriptstyle 0.433132  &  \scriptstyle 0.241915  &  \scriptstyle 0.000512762  &  \scriptstyle -0.241076  &  \scriptstyle -0.432708  &  \scriptstyle -0.320879  &  \scriptstyle -0.161859  &  \scriptstyle 0    \\
+\scriptstyle 0  &  \scriptstyle 0.250955  &  \scriptstyle 0.547878  &  \scriptstyle 1  &  \scriptstyle 0.430814  &  \scriptstyle 0.000552575  &  \scriptstyle -0.430009  &  \scriptstyle -1  &  \scriptstyle -0.547774  &  \scriptstyle -0.2509  &  \scriptstyle 0    \\
+\scriptstyle 0  &  \scriptstyle 0.294114  &  \scriptstyle 0.61954  &  \scriptstyle 1  &  \scriptstyle 0.480523  &  \scriptstyle 0.00055478  &  \scriptstyle -0.479734  &  \scriptstyle -1  &  \scriptstyle -0.619487  &  \scriptstyle -0.294088  &  \scriptstyle 0    \\
+\scriptstyle 0  &  \scriptstyle 0.306097  &  \scriptstyle 0.636272  &  \scriptstyle 1  &  \scriptstyle 0.490457  &  \scriptstyle 0.000543155  &  \scriptstyle -0.489687  &  \scriptstyle -1  &  \scriptstyle -0.636232  &  \scriptstyle -0.306078  &  \scriptstyle 0    \\
+\scriptstyle 0  &  \scriptstyle 0.294129  &  \scriptstyle 0.619554  &  \scriptstyle 1  &  \scriptstyle 0.480499  &  \scriptstyle 0.000521424  &  \scriptstyle -0.479757  &  \scriptstyle -1  &  \scriptstyle -0.619501  &  \scriptstyle -0.294101  &  \scriptstyle 0    \\
+\scriptstyle 0  &  \scriptstyle 0.250983  &  \scriptstyle 0.547904  &  \scriptstyle 1  &  \scriptstyle 0.430766  &  \scriptstyle 0.000485059  &  \scriptstyle -0.430059  &  \scriptstyle -1  &  \scriptstyle -0.547807  &  \scriptstyle -0.250928  &  \scriptstyle 0    \\
+\scriptstyle 0  &  \scriptstyle 0.161992  &  \scriptstyle 0.32115  &  \scriptstyle 0.433122  &  \scriptstyle 0.241849  &  \scriptstyle 0.00041584  &  \scriptstyle -0.241167  &  \scriptstyle -0.432772  &  \scriptstyle -0.320946  &  \scriptstyle -0.161904  &  \scriptstyle 0    \\
+\scriptstyle 0  &  \scriptstyle 0.0758946  &  \scriptstyle 0.141614  &  \scriptstyle 0.16942  &  \scriptstyle 0.102903  &  \scriptstyle 0.000242696  &  \scriptstyle -0.102485  &  \scriptstyle -0.16915  &  \scriptstyle -0.141458  &  \scriptstyle -0.0758287  &  \scriptstyle 0    \\
+\scriptstyle 0  &  \scriptstyle 0  &  \scriptstyle 0  &  \scriptstyle 0  &  \scriptstyle 0  &  \scriptstyle 0  &  \scriptstyle 0  &  \scriptstyle 0  &  \scriptstyle 0  &  \scriptstyle 0  &  \scriptstyle 0    \\
+\end{array}
+\]
+
+\begin{figure}[htp]
+\centering
+\includegraphics[scale=0.8]{/home/alexandra/LapJac1.pdf}
+\caption{\sf  \footnotesize Jacobi method, with length $L=2$, plotted by $ROOT$.}
+\centering
+\includegraphics[scale=0.8,trim=0 0 0 -2cm]{/home/alexandra/LapSOR1.pdf}
+\caption{\sf \footnotesize SOR algorithm, with length $L=2$, plotted by $ROOT$.}
+\label{fig1}
+\end{figure}
+
+\newpage
+\section{The Relation of $N_{\mathrm{iter}}$ and $L$}
+\normalsize Even though the final results of Jacobi method and SOR algorithm are the same, what makes them differ from each other is the speed of calculation, in this case, the times we call on the subprogram \sf \footnotesize update-V \rm \normalsize , $N_{\mathrm{iter}}$. \\\\
+\begin{figure}[htbp]
+\centering
+\includegraphics[scale=0.7]{/home/alexandra/fitNL5.pdf}
+\caption{\sf \footnotesize  $N_{\mathrm{iter}} - L$ of Jacobi method and SOR algorithm. Red curves are fitted, by $ROOT$}
+\end{figure}
+\\
+****************************************\\
+Minimizer is Linear\\
+Chi2                      =      6280.93\\
+NDf                       =            7\\
+p0                        =     -136.717   +/-   35.2311  \\   
+p1                        =      115.807   +/-   14.714  \\    
+p2                        =      16.8826   +/-   1.3036  \\    
+\\
+****************************************\\
+Minimizer is Linear\\
+Chi2                      =      16011.2\\
+NDf                       =            8\\
+p0                        =     -153.733   +/-   30.5612  \\   
+p1                        =      107.279   +/-   4.92538   \\  \\
+The Chi-squared distribution fit values Chi2 are both very large, which indicates the two polymonial fitting is not very successful. 
+% In order to better this $N_{\mathrm{iter}} - L$ theory fitting, we can increasing the reqiurement of accuracy, i.e., to shrink $\Delta V$ from $10^{-5}$ to some much smaller value like $10^{-10}$. And the result is
+\newpage
+\section{Other Systems}
+\normalsize In this section, we will explore some other systems that obey the Laplace's equation or the Poisson's equation
+\begin{equation}
+\frac{\partial^2 V}{\partial x^2}+\frac{\partial^2 V}{\partial y^2}+\frac{\partial^2 V}{\partial z^2}=-\frac{\rho}{\epsilon_0}.
+\end{equation}
+\begin{figure}[htbp]
+\centering
+\includegraphics[trim=2cm 0 0 -1cm]{/home/alexandra/PointChar.pdf}
+\caption{\sf  \footnotesize A point charge $+q$ located at the center of a metal box. The faces of the box are all held at $V=0$.}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[trim=2cm 0 0 -1cm]{/home/alexandra/CutOff.pdf}
+\caption{\sf  \footnotesize A capacitor whose both plates are half at potential $V=1$ and another half at $V=-1$.}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[trim=2cm 0 0 0]{/home/alexandra/ElectricShield.pdf}
+\caption{\sf  \footnotesize Electrostatic screening Phenomenon, \normalsize{\color{red}静电屏蔽}. \footnotesize A closed metal box whose potential at the faces are all at $V=1$.}
+\label{fig6}
+\end{figure}
+\begin{figure}[htbp]
+\centering
+\includegraphics[scale=0.8, trim=0 0 0 -0.5cm]{/home/alexandra/BoxCross.pdf}
+\caption{\sf  \footnotesize A closed metal box whose potential at the two opposite faces are at $V=1$ and another two at $V=-1$.}
+\end{figure}
+\begin{figure}[htbp]
+\centering
+\includegraphics[scale=0.8, trim=0 0 0 -0.5cm]{/home/alexandra/BoxDiag.pdf}
+\caption{\sf  \footnotesize A closed metal box whose potential at the two neighboring faces are at $V=1$ and another two at $V=-1$.}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[trim=2cm 0 0 0]{/home/alexandra/PoissonLine.pdf}
+\caption{\sf  \footnotesize Charges $+q$ located at a line in the center of a metal box. The faces of the box are all held at $V=0$.}
+\end{figure}
+\begin{figure}[htbp]
+\centering
+\includegraphics[trim=2cm 0 0 0]{/home/alexandra/PoissonHollowBox.pdf}
+\caption{\sf   Charge $+q$ located at a smaller hollow box at the center of a metal box. The faces of the box are all held at $V=0$. This case differs from Figure \ref{fig6}, {\color{red}静电屏蔽现象 } because it is the source other than static potential. Therefore, in the box the potential still exists and doesn't vanish.}
+\end{figure}
+
+
+
+
+\end{CJK}
+\end{document}
+
